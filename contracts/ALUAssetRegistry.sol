@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 /// @title Registers digital assets, such as the ALU logo, as ERC-721 NFTs.
 contract ALUAssetRegistry is ERC721 {
+    /// @notice The details saved for each registered file.
     struct AssetMetadata {
         string assetName;
         string fileType;
@@ -13,19 +14,25 @@ contract ALUAssetRegistry is ERC721 {
         uint256 registeredAt;
     }
 
+    /// @notice Finds the saved details of a file by its token ID.
     mapping(uint256 => AssetMetadata) public assets;
+    /// @notice Remembers which file hashes are already registered.
     mapping(bytes32 => bool) public registeredHashes;
 
     uint256 private tokenCounter;
 
+    /// @notice Announced every time a new file is registered.
     event AssetRegistered(
         uint256 indexed tokenId,
         address indexed registeredBy,
         bytes32 contentHash
     );
 
+    /// @notice Creates the registry and gives its NFTs a name and symbol.
     constructor() ERC721("ALU Asset Registry", "ALUASSET") {}
 
+    /// @notice Registers a new file as an NFT and saves its details.
+    /// @dev Stops if the hash is empty or the file is already registered.
     function registerAsset(
         string memory assetName,
         string memory fileType,
@@ -58,6 +65,8 @@ contract ALUAssetRegistry is ERC721 {
         return tokenId;
     }
 
+    /// @notice Checks if a file's hash matches the one saved for a token.
+    /// @dev Free to call because it only reads data.
     function verifyLogoIntegrity(
         uint256 tokenId,
         bytes32 suppliedHash
@@ -71,6 +80,7 @@ contract ALUAssetRegistry is ERC721 {
         return (false, "Warning: logo does not match.");
     }
 
+    /// @notice Returns all saved details for a token.
     function getAsset(
         uint256 tokenId
     ) public view returns (AssetMetadata memory) {
@@ -79,6 +89,7 @@ contract ALUAssetRegistry is ERC721 {
         return assets[tokenId];
     }
 
+    /// @notice Returns how many files have been registered so far.
     function totalAssets() public view returns (uint256) {
         return tokenCounter;
     }
