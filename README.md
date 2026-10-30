@@ -1,7 +1,5 @@
 # Protecting the ALU Logo on the Ethereum Blockchain
 
-**Assignment 1, Cryptocurrency and Digital Assets** · Joseph Nishimwe · October 2026
-
 ALU's logo is an image file, so anyone can copy it, change it and pass it off as the real one. This project gives the logo a permanent, public record on the Ethereum blockchain. The record holds the logo's SHA-256 fingerprint, who registered it and when, so anyone can check for free whether a logo file is the original. A second contract splits ownership of the logo into 1,000,000 equal shares that ALU can give to staff, students and partners.
 
 Both contracts are tested (8 of 8 tests pass), deployed and verified on the Sepolia public testnet.
